@@ -1,6 +1,5 @@
 import http ,{IncomingMessage,ServerResponse} from 'http'
-import type {routes} from '../src/routes/routes.js' //  Replace with route
-import { REPL_MODE_STRICT } from 'repl';
+
 
 const PORT =6000;
    
