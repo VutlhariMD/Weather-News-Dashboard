@@ -1,21 +1,16 @@
 import http ,{IncomingMessage,ServerResponse} from 'http'
 import type {routes} from '../src/routes/routes.js' //  Replace with route
+import { REPL_MODE_STRICT } from 'repl';
 
 const PORT =6000;
+   
+const server = http.createServer((request, response) => {
 
-const requestListener = (request : IncomingMessage, response: ServerResponse) => {
+    response.writeHead(200, {"content-type": " application/json"});
+    response.end(JSON.stringify({message: "The server is running"}));
+});
 
-    if(request.url?.startsWith("/data")){
-      //Execute the request
-        
-    }
-    else{
-        response.writeHead(200, {"content-type" : "application/json"});
-        response.end((JSON.stringify({message : "This is an error that will be displayed when the endpontds are not working"})));
-    }
-    const server =http.createServer(requestListener);
-    server.listen(PORT, ()=> {console.log(`Server is running on http://localhost:${PORT}`)});
+server.listen(PORT, ()=> {console.log(`Server is running on http://localhost:${PORT}`)});
 
 
 
-}
