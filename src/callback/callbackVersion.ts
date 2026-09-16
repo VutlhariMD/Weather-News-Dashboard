@@ -1,6 +1,14 @@
 import {WEATHER_API} from '../api.js'
 import {NEWS_API } from '../api.js'
 import https from 'https'
+import promptSync from 'prompt-sync'
+
+
+const prompt = promptSync();
+const city = prompt('Please enter the city to search :')
+
+
+
 
 
 const fetchWeatherData =(latitude: number,longitude: number ,
