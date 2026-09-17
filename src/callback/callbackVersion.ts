@@ -8,7 +8,9 @@ import https from "https";
 import promptSync from "prompt-sync";
 const prompt = promptSync();
 //Get input from the user
-const cityname = prompt("Please enter the city to search and click enter to get the current weather:");
+const cityname = prompt(
+    "Please enter the city to search and click enter to get the current weather:",
+);
 
 const getCityCoordinates = (
     cityName: string,
@@ -18,7 +20,9 @@ const getCityCoordinates = (
     const city = cityName.trim();
     if (!city) {
         callback(
-            new Error("You did not add the name of the city you want to search."),
+            new Error(
+                "\nYou did not add the name of the city you want to search.",
+            ),
         );
         return;
     }
@@ -61,7 +65,7 @@ const fetchWeatherData = (
         res.on("end", () => {
             try {
                 const parsedData = JSON.parse(weatherData);
-                
+
                 callback(null, parsedData);
             } catch (error) {
                 callback(error as Error);
@@ -83,7 +87,7 @@ const fetchNews = (callback: (error: Error | null, data?: any) => void) => {
             res.on("end", () => {
                 try {
                     const parsedData = JSON.parse(newsData);
-                  
+
                     callback(null, parsedData);
                 } catch (error) {
                     callback(error as Error);
@@ -103,9 +107,7 @@ getCityCoordinates(cityname, (error, result) => {
         return;
     }
 
-    
-
-    //This function is called inside another function because I want to use longitude and the latitude we got to find the weather 
+    //This function is called inside another function because I want to use longitude and the latitude we got to find the weather
     fetchWeatherData(
         result.latitude,
         result.longitude,
@@ -115,10 +117,20 @@ getCityCoordinates(cityname, (error, result) => {
                 return;
             }
 
-            console.log("==============================================\n WEATHER DATA:" +
-                 "\n==============================================");
-            console.log("Temperature : " ,weatherData.current.temperature_2m ,"°C");
-            console.log("Wind Speed:", weatherData.current.wind_speed_10m, "km/h");
+            console.log(
+                "\n\n==============================================\n WEATHER DATA:" +
+                    "\n==============================================",
+            );
+            console.log(
+                "Temperature : ",
+                weatherData.current.temperature_2m,
+                "°C",
+            );
+            console.log(
+                "Wind Speed:",
+                weatherData.current.wind_speed_10m,
+                "km/h",
+            );
         },
     );
 });
@@ -127,19 +139,18 @@ fetchNews((error, newsData) => {
     if (error) {
         console.error("Error getting News", error.message);
         return;
-       
     }
-    console.log("==============================================\n NEWS :  "+
-
-    "\n================================================");
+    console.log(
+        "\n\n==============================================\n NEWS :  " +
+            "\n================================================",
+    );
     const post1 = newsData.posts[0];
-     console.log(`Title : ${post1.title}`);
-     console.log(`Title : ${post1.body}`)
-  
+    console.log(`Title : ${post1.title}`);
+    console.log(`Title : ${post1.body}`);
 
-     console.log(" ")
+    console.log(" ");
     const post2 = newsData.posts[1];
-      
-     console.log(`Title : ${post2.title}`);
-     console.log(`Title : ${post2.body}`)
+
+    console.log(`Title : ${post2.title}`);
+    console.log(`Title : ${post2.body} \n`);
 });
