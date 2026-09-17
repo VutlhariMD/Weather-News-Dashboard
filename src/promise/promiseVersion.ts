@@ -1,7 +1,52 @@
 import { WEATHER_API, NEWS_API } from "../api.js";
 import https from "https";
+import promptSync from "prompt-sync";
 
-function promiseFetchWeather(): Promise<any> {
+const prompt = promptSync();
+
+// Get input from the user
+const cityname = prompt(
+    "Please enter the city to search and click enter to get the current weather: ",
+);
+
+function promiseGetCoordinates(cityName: string): Promise<any> {
+    console.log("Fetching city coordinates...");
+
+    const city = cityName.trim();
+
+    if (!city) {
+        return Promise.reject(
+            new Error("You did not add the name of the city you want to search."),
+        );
+    }
+
+    const get_coordinates_url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
+
+    return new Promise((resolve, reject) => {
+        https
+            .get(get_coordinates_url, (response) => {
+                let cityData = "";
+
+                response.on("data", (chunk) => {
+                    cityData += chunk;
+                });
+
+                response.on("end", () => {
+                    try {
+                        const parsedData = JSON.parse(cityData);
+
+                      
+                        resolve(parsedData.results[0]);
+                    } catch (err) {
+                        reject(err);
+                    }
+                });
+            })
+            .on("error", reject);
+    });
+}
+
+function promiseFetchWeather(latitude: number, longitude: number): Promise<any> {
     console.log("Fetching the weather data...");
 
     return new Promise((resolve, reject) => {
@@ -51,13 +96,15 @@ function promiseFetchNews(): Promise<any> {
     });
 }
 
-promiseFetchWeather()
+// Chain: get coordinates for the entered city, then fetch weather for them
+promiseGetCoordinates(cityname)
+    .then((coords) => promiseFetchWeather(coords.latitude, coords.longitude))
     .then((weatherData) => {
         console.log("Weather data received:");
         console.log(weatherData);
     })
     .catch((error) => {
-        console.error("Failed to fetch weather:", error);
+        console.error("Failed to fetch weather:", error.message);
     });
 
 promiseFetchNews()
@@ -66,10 +113,14 @@ promiseFetchNews()
         console.log(newsData);
     })
     .catch((error) => {
-        console.error("Failed to fetch news:", error);
+        console.error("Failed to fetch news:", error.message);
     });
 
-Promise.all([promiseFetchWeather(), promiseFetchNews()])
+// Both weather (for the entered city) and news together
+promiseGetCoordinates(cityname)
+    .then((coords) =>
+        Promise.all([promiseFetchWeather(coords.latitude, coords.longitude), promiseFetchNews()]),
+    )
     .then(([weatherData, newsData]) => {
         console.log("Both requests completed!");
 
@@ -80,14 +131,20 @@ Promise.all([promiseFetchWeather(), promiseFetchNews()])
         console.log(newsData);
     })
     .catch((error) => {
-        console.error("Something went wrong:", error);
+        console.error("Something went wrong:", error.message);
     });
 
-Promise.race([promiseFetchNews(), promiseFetchWeather()])
+// Race: whichever finishes first between news and coordinates+weather
+Promise.race([
+    promiseFetchNews(),
+    promiseGetCoordinates(cityname).then((coords) =>
+        promiseFetchWeather(coords.latitude, coords.longitude),
+    ),
+])
     .then((result) => {
         console.log("The fastest request finished: ");
         console.log(result);
     })
     .catch((error) => {
-        console.error("Request failed :", error);
+        console.error("Request failed :", error.message);
     });
