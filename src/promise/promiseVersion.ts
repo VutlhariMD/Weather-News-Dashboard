@@ -9,6 +9,8 @@ const cityname = prompt(
     "Please enter the city to search and click enter to get the current weather: ",
 );
 
+
+//Fetches the city coordinates
 function promiseGetCoordinates(cityName: string): Promise<any> {
     console.log("Fetching city coordinates...");
 
@@ -19,7 +21,7 @@ function promiseGetCoordinates(cityName: string): Promise<any> {
             new Error("You did not add the name of the city you want to search."),
         );
     }
-
+   //Url for getting the coordinates of the city name the user entered 
     const get_coordinates_url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
 
     return new Promise((resolve, reject) => {

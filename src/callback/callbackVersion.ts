@@ -61,7 +61,7 @@ const fetchWeatherData = (
         res.on("end", () => {
             try {
                 const parsedData = JSON.parse(weatherData);
-                console.log(parsedData);
+                
                 callback(null, parsedData);
             } catch (error) {
                 callback(error as Error);
@@ -83,7 +83,7 @@ const fetchNews = (callback: (error: Error | null, data?: any) => void) => {
             res.on("end", () => {
                 try {
                     const parsedData = JSON.parse(newsData);
-                    console.log(parsedData);
+                  
                     callback(null, parsedData);
                 } catch (error) {
                     callback(error as Error);
@@ -103,7 +103,6 @@ getCityCoordinates(cityname, (error, result) => {
         return;
     }
 
-    console.log(result.latitude, result.longitude);
     
 
     //This function is called inside another function because I want to use longitude and the latitude we got to find the weather 
@@ -116,8 +115,10 @@ getCityCoordinates(cityname, (error, result) => {
                 return;
             }
 
-            console.log("==============================================\n Weather Data: ");
-            console.log(weatherData);
+            console.log("==============================================\n WEATHER DATA:" +
+                 "\n==============================================");
+            console.log("Temperature : " ,weatherData.current.temperature_2m ,"°C");
+            console.log("Wind Speed:", weatherData.current.wind_speed_10m, "km/h");
         },
     );
 });
@@ -128,6 +129,17 @@ fetchNews((error, newsData) => {
         return;
        
     }
-    console.log("==============================================\n News :  ");
-     console.log(newsData);
+    console.log("==============================================\n NEWS :  "+
+
+    "\n================================================");
+    const post1 = newsData.posts[0];
+     console.log(`Title : ${post1.title}`);
+     console.log(`Title : ${post1.body}`)
+  
+
+     console.log(" ")
+    const post2 = newsData.posts[1];
+      
+     console.log(`Title : ${post2.title}`);
+     console.log(`Title : ${post2.body}`)
 });
