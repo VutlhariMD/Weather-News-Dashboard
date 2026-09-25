@@ -41,10 +41,13 @@ It also demonstrate how the Node.js **event loop** allows asynchronous operation
   run the below commands on the terminal
 
   1. Command for the Callback file
+     
      npx tsx src/callback/callbackVersion.ts
-  2. Command for the Promise file
+  3. Command for the Promise file
+  4. 
      npx tsx .\src\promise\promiseVersion.ts
-  3. Command for the Async file
+     
+  6. Command for the Async file
     > npx tsx .\src\asyncwait\asyncAwaitVersion.ts        
      
 
