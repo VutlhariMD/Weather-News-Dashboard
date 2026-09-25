@@ -57,7 +57,8 @@ It also demonstrate how the Node.js **event loop** allows asynchronous operation
      
   6. Command for the Async file
 
-      npm run async
+     *  npm run async
+     *  Enter the name of the city
      <img width="961" height="397" alt="image" src="https://github.com/user-attachments/assets/cc9215ab-878e-4f97-8b58-99920df79fd5" />
      
 
