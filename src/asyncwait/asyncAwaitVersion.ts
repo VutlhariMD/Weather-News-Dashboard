@@ -1,6 +1,7 @@
 import { WEATHER_API } from "../api.js";
 import { NEWS_API } from "../api.js";
 import https from "https";
+//Allows the program to be able to ask the user for the input from the terminal
 import promptSync from "prompt-sync";
 
 const prompt = promptSync();
@@ -8,7 +9,9 @@ const prompt = promptSync();
 const cityname = prompt(
     "Please enter the city to search and click enter to get the current weather: ",
 );
-
+ 
+//An Async function
+//Return the coordinates of the city entered so that we use them to get the weather data
 const getCityCoordinates = async (cityName: string) => {
     const city = cityName.trim();
 
@@ -18,11 +21,12 @@ const getCityCoordinates = async (cityName: string) => {
 
     const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
 
+    
+    
+    //Create a promise: will  get the data now but it will finish later
     const data = await new Promise<any>((resolve, reject) => {
-        https
-            .get(url, (res) => {
+        https.get(url, (res) => {
                 let data = "";
-
                 res.on("data", (chunk) => {
                     data += chunk;
                 });
@@ -36,6 +40,7 @@ const getCityCoordinates = async (cityName: string) => {
                     }
                 });
             })
+            //handle Https errors
             .on("error", (error) => {
                 reject(error);
             });
@@ -49,7 +54,9 @@ const getCityCoordinates = async (cityName: string) => {
     const longitude = data.results[0].longitude;
     const locationName = data.results[0].name;
     const country = data.results[0].country;
+    
 
+    //Return the data needed to request for the weather 
     return {
         latitude,
         longitude,
@@ -59,13 +66,13 @@ const getCityCoordinates = async (cityName: string) => {
 };
 
 const fetchWeatherData = async (latitude: number, longitude: number) => {
+    //Get the weather current weather for the coordinates substituded in the url
     const url = `${WEATHER_API}?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
 
     const data = await new Promise<any>((resolve, reject) => {
-        https
-            .get(url, (res) => {
+       
+            https.get(url, (res) => {
                 let data = "";
-
                 res.on("data", (chunk) => {
                     data += chunk;
                 });
@@ -79,6 +86,7 @@ const fetchWeatherData = async (latitude: number, longitude: number) => {
                     }
                 });
             })
+            //handle https errors
             .on("error", (error) => {
                 reject(error);
             });
@@ -116,6 +124,7 @@ const fetchNews = async () => {
 
 const functionCalls = async () => {
     try {
+        //Call the function , call with an await
         const location = await getCityCoordinates(cityname);
 
         console.log("\n================================");
@@ -160,4 +169,3 @@ const functionCalls = async () => {
     }
 };
 functionCalls();
-8;
