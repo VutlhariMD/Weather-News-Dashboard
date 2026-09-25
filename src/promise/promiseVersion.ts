@@ -37,7 +37,7 @@ function promiseGetCoordinates(cityName: string): Promise<any> {
                     try {
                         const parsedData = JSON.parse(cityData);
 
-                      
+                      // We want the first part of the data
                         resolve(parsedData.results[0]);
                     } catch (err) {
                         reject(err);
@@ -97,13 +97,29 @@ function promiseFetchNews(): Promise<any> {
             .on("error", reject);
     });
 }
+//Declare functions at the top and then come and call them
 
-// Chain: get coordinates for the entered city, then fetch weather for them
+// Chaining the promises get coordinates for the entered city, then fetch weather for them
+console.log("********************************************************************\n PROMISE.CHAINING  OUTPUT \n"+
+    "********************************************************************")
 promiseGetCoordinates(cityname)
-    .then((coords) => promiseFetchWeather(coords.latitude, coords.longitude))
+    .then((coordinates) => promiseFetchWeather(coordinates.latitude, coordinates.longitude))
     .then((weatherData) => {
-        console.log("Weather data received:");
-        console.log(weatherData);
+        console.log("Weather data received(PromiseChaining) :");
+       console.log(
+                "\n\n===================\n WEATHER DATA:" +
+                    "\n==================",
+            );
+            console.log(
+                "Temperature : ",
+                weatherData.current.temperature_2m,
+                "°C",
+            );
+            console.log(
+                "Wind Speed:",
+                weatherData.current.wind_speed_10m,
+                "km/h",
+            );
     })
     .catch((error) => {
         console.error("Failed to fetch weather:", error.message);
@@ -111,32 +127,79 @@ promiseGetCoordinates(cityname)
 
 promiseFetchNews()
     .then((newsData) => {
-        console.log("News data received:");
-        console.log(newsData);
+        console.log("News data received(PromiseChaining): ");
+          console.log(
+        "\n\n===========\n NEWS :  " +
+            "\n=======",
+    );
+    const post1 = newsData.posts[0];
+    console.log(`Title : ${post1.title}`);
+    console.log(`Title : ${post1.body}`);
+
+    console.log(" ");
+    const post2 = newsData.posts[1];
+
+    console.log(`Title : ${post2.title}`);
+    console.log(`Title : ${post2.body} \n`);
     })
     .catch((error) => {
         console.error("Failed to fetch news:", error.message);
     });
 
+/***************************************************************
 // Both weather (for the entered city) and news together
+****************************************************************/
+console.log("********************************************************************\n PROMISE.ALL  OUTPUT \n"+
+    "********************************************************************")
+
 promiseGetCoordinates(cityname)
     .then((coords) =>
         Promise.all([promiseFetchWeather(coords.latitude, coords.longitude), promiseFetchNews()]),
     )
     .then(([weatherData, newsData]) => {
-        console.log("Both requests completed!");
+        console.log("Both requests completed!!!!!");
 
-        console.log("Weather:");
-        console.log(weatherData);
+          console.log(
+                "\n\n===================\n WEATHER DATA:" +
+                    "\n==================",
+            );
+            console.log(
+                "Temperature : ",
+                weatherData.current.temperature_2m,
+                "°C",
+            );
+            console.log(
+                "Wind Speed:",
+                weatherData.current.wind_speed_10m,
+                "km/h",
+            );
 
         console.log("News:");
-        console.log(newsData);
+         console.log(
+        "\n\n===========\n NEWS :  " +
+            "\n==========",
+    );
+    const post1 = newsData.posts[0];
+    console.log(`Title : ${post1.title}`);
+    console.log(`Title : ${post1.body}`);
+
+    console.log(" ");
+    const post2 = newsData.posts[1];
+
+    console.log(`Title : ${post2.title}`);
+    console.log(`Title : ${post2.body} \n`);
     })
     .catch((error) => {
         console.error("Something went wrong:", error.message);
     });
-
+/**********************************************************************
 // Race: whichever finishes first between news and coordinates+weather
+***********************************************************************/
+ 
+
+console.log("********************************************************************\n PROMISE.RACE  OUTPUT \n"+
+    "********************************************************************")
+
 Promise.race([
     promiseFetchNews(),
     promiseGetCoordinates(cityname).then((coords) =>
@@ -150,3 +213,6 @@ Promise.race([
     .catch((error) => {
         console.error("Request failed :", error.message);
     });
+
+
+    
