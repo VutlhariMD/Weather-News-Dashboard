@@ -44,7 +44,8 @@ It also demonstrate how the Node.js **event loop** allows asynchronous operation
      
      npm run callback
 
-     <img width="350" height="300 alt="image" src="https://github.com/user-attachments/assets/4f5c0704-c255-49a1-baee-e49f0fab333a"/>
+<img width="961" height="397" alt="image" src="https://github.com/user-attachments/assets/cc9215ab-878e-4f97-8b58-99920df79fd5" />
+
 
      
   3. Command for the Promise file
