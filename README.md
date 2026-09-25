@@ -17,20 +17,20 @@ The project demonstrates 3 ways of handlings asynchronous operation:
 It also demonstrate how the Node.js **event loop** allows asynchronous operations to run without blocking the main thread.
 
 
-## Technologies used :
+### Technologies used :
 * Node.js
 * Tyepscript
 * Open Meteo API
 * DummyJSON API
 
-## 📁 Project Structure
+### 📁 Project Structure
 
 
 
-## How to run the project.
+### How to run the project.
 
 * Clone the project
-  -> git clone <url>
+  -> git clone https://github.com/VutlhariMD/Weather-News-Dashboard.git
 
 * Install dependecies
   -> npm i
