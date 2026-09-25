@@ -23,7 +23,7 @@ It also demonstrate how the Node.js **event loop** allows asynchronous operation
 * Open Meteo API
 * DummyJSON API
 
-### 📁 Project Structure
+
 
 
 
@@ -58,7 +58,7 @@ It also demonstrate how the Node.js **event loop** allows asynchronous operation
 
 
 
-
+### 📁 Project Structure
 ```text
 async-weather-news/
 │
