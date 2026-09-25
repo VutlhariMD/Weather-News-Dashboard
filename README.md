@@ -43,8 +43,10 @@ It also demonstrate how the Node.js **event loop** allows asynchronous operation
   1. Command for the Callback file
      
      npm run callback
+     <img width="1812" height="784" alt="image" src="https://github.com/user-attachments/assets/2fec00c3-ae0a-4434-80ca-65d10a3ad8a1" />
 
-<img width="961" height="397" alt="image" src="https://github.com/user-attachments/assets/cc9215ab-878e-4f97-8b58-99920df79fd5" />
+
+
 
 
      
@@ -54,7 +56,8 @@ It also demonstrate how the Node.js **event loop** allows asynchronous operation
      
   6. Command for the Async file
 
-      npm run async    
+      npm run async
+     <img width="961" height="397" alt="image" src="https://github.com/user-attachments/assets/cc9215ab-878e-4f97-8b58-99920df79fd5" />
      
 
 
