@@ -42,7 +42,8 @@ It also demonstrate how the Node.js **event loop** allows asynchronous operation
 
   1. Command for the Callback file
      
-     npm run callback
+     * npm run callback
+     * Enter the name of the city you want to search
      <img width="1812" height="784" alt="image" src="https://github.com/user-attachments/assets/2fec00c3-ae0a-4434-80ca-65d10a3ad8a1" />
 
 
