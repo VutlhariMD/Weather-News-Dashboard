@@ -42,15 +42,18 @@ It also demonstrate how the Node.js **event loop** allows asynchronous operation
 
   1. Command for the Callback file
      
-     npx tsx src/callback/callbackVersion.ts
+     npm run callback
+
+     <img width="350" height="300 alt="image" src="https://github.com/user-attachments/assets/4f5c0704-c255-49a1-baee-e49f0fab333a" />
+
      
   3. Command for the Promise file
   
-     npx tsx .\src\promise\promiseVersion.ts
+      npm run promise
      
   6. Command for the Async file
 
-      npx tsx .\src\asyncwait\asyncAwaitVersion.ts        
+      npm run async    
      
 
 
